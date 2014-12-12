@@ -319,12 +319,13 @@ object SkinnyFrameworkBuild extends Build {
     "org.jvnet.mock-javamail" %  "mock-javamail"      % "1.9"            % "provided"
   )
   lazy val testDependencies = Seq(
-    "org.scalatest"           %% "scalatest"       % "2.2.2"   % "test",
-    "ch.qos.logback"          %  "logback-classic" % "1.1.2"   % "test",
-    "org.jvnet.mock-javamail" %  "mock-javamail"   % "1.9"     % "test",
-    "com.h2database"          %  "h2"              % h2Version % "test",
-    "org.skinny-framework"    %  "skinny-logback"  % "1.0.3"   % "test",
-    "com.h2database"          %  "h2"              % h2Version % "test"
+    "org.scalatest"           %% "scalatest"       % "3.0.0-SNAP3" % "test",
+    "org.scalactic"           %% "scalactic"       % "3.0.0-SNAP3" % "test",
+    "ch.qos.logback"          %  "logback-classic" % "1.1.2"       % "test",
+    "org.jvnet.mock-javamail" %  "mock-javamail"   % "1.9"         % "test",
+    "com.h2database"          %  "h2"              % h2Version     % "test",
+    "org.skinny-framework"    %  "skinny-logback"  % "1.0.3"       % "test",
+    "com.h2database"          %  "h2"              % h2Version     % "test"
   )
 
   def _publishTo(v: String) = {
