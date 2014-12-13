@@ -1,7 +1,6 @@
 package skinny.orm.feature
 
-import org.scalatest.matchers.ShouldMatchers
-import org.scalatest.{ Matchers, FunSpec }
+import org.scalatest._
 import skinny.ParamType
 
 /**
