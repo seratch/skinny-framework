@@ -337,11 +337,11 @@ REM run command
 REM ***************************************************************************
 :run
 IF "%option%"=="-precompile" (
-  sbt "project precompileDev" "~;container:restart"
+  sbt "project precompileDev" "~;container:stop;container:start"
 ) ELSE IF "%option%"=="--precompile" (
-  sbt "project precompileDev" "~;container:restart"
+  sbt "project precompileDev" "~;container:stop;container:start"
 ) ELSE (
-  sbt "~;container:restart"
+  sbt "~;container:stop;container:start"
 )
 GOTO script_eof
 
@@ -351,21 +351,21 @@ REM ***************************************************************************
 :debug
 IF "%option%"=="-precompile" (
   IF "%3"=="" (
-    sbt-debug 5005 "project precompileDev" "~;container:restart"
+    sbt-debug 5005 "project precompileDev" "~;container:stop;container:start"
   ) ELSE (
-    sbt-debug %3 "project precompileDev" "~;container:restart"
+    sbt-debug %3 "project precompileDev" "~;container:stop;container:start"
   )
 ) ELSE IF "%option%"=="--precompile" (
   IF "%3"=="" (
-    sbt-debug 5005 "project precompileDev" "~;container:restart"
+    sbt-debug 5005 "project precompileDev" "~;container:stop;container:start"
   ) ELSE (
-    sbt-debug %3 "project precompileDev" "~;container:restart"
+    sbt-debug %3 "project precompileDev" "~;container:stop;container:start"
   )
 ) ELSE (
   IF "%2"=="" (
-    sbt-debug 5005 "~;container:restart"
+    sbt-debug 5005 "~;container:stop;container:start"
   ) ELSE (
-    sbt-debug %2 "~;container:restart"
+    sbt-debug %2 "~;container:stop;container:start"
   )
 )
 GOTO script_eof

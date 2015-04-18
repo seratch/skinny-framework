@@ -4,6 +4,10 @@
 //scalariformSettings
 
 // ------------------------------
+// xsbt-web-plugin settings
+jetty(port = 8080)
+
+// ------------------------------
 // for ./skinnny console
 initialCommands := """
 import skinny._

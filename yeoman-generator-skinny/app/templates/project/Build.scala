@@ -1,8 +1,6 @@
 import sbt._, Keys._
 import org.scalatra.sbt._, PluginKeys._
 import skinny.scalate.ScalatePlugin._, ScalateKeys._
-import com.earldouglas.xsbtwebplugin.WebPlugin._
-import com.earldouglas.xsbtwebplugin.PluginKeys._
 import org.sbtidea.SbtIdeaPlugin._
 import scala.language.postfixOps
 
@@ -16,8 +14,8 @@ object SkinnyAppBuild extends Build {
   val appName = "skinny-blank-app"
   val appVersion = "0.1.0-SNAPSHOT"
 
-  val skinnyVersion = "1.3.16"
-  val scalatraVersion = "2.3.1"
+  val skinnyVersion = "1.4.0-SNAPSHOT"
+  val scalatraVersion = "2.4.0.RC1"
   val theScalaVersion = "2.11.6"
   val jettyVersion = "9.2.10.v20150310"
 
@@ -78,8 +76,7 @@ object SkinnyAppBuild extends Build {
   lazy val devBaseSettings = baseSettings ++ Seq(
     unmanagedClasspath in Test <+= (baseDirectory) map { bd =>  Attributed.blank(bd / "src/main/webapp") },
     // Scalatra tests become slower when multiple controller tests are loaded in the same time
-    parallelExecution in Test := false,
-    port in container.Configuration := 8080
+    parallelExecution in Test := false
   )
   lazy val dev = Project(id = "dev", base = file("."),
     settings = devBaseSettings ++ Seq(

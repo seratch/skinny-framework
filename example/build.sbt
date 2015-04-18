@@ -4,7 +4,7 @@ scalariformSettings
 
 net.virtualvoid.sbt.graph.Plugin.graphSettings
 
-env in Compile := Some(file("example") / "jetty-env.xml" asFile)
+jetty(port = 8080)
 
 initialCommands := """
 import _root_.controller._, model._
