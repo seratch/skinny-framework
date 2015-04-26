@@ -1,9 +1,5 @@
 import scala.language.postfixOps
 
-scalariformSettings
-
-net.virtualvoid.sbt.graph.Plugin.graphSettings
-
 jetty(port = 8080)
 
 initialCommands := """
