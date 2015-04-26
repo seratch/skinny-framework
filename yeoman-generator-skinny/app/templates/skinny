@@ -28,13 +28,13 @@ function verify_skinny_project() {
 }
 
 function run_app() {
-  ${sbt_path} "~;container:restart"
+  ${sbt_path} "~;container:stop;container:start"
 }
 function run_precompile_app() {
-  ${sbt_path} "project precompileDev" "~;container:restart"
+  ${sbt_path} "project precompileDev" "~;container:stop;container:start"
 }
 function run_debuggable_app() {
-  ${sbt_debug_path} $1 "~;container:restart"
+  ${sbt_debug_path} $1 "~;container:stop;container:start"
 }
 function setup_build() {
   rm -rf build

@@ -86,8 +86,8 @@ trait SkinnySessionFilter extends SkinnyFilter {
       !CsrfTokenSupport.HeaderNames.map(request.headers.get).contains(skinnySession.getAttribute(csrfKey))
   }
 
-  override protected def prepareCsrfToken() = {
-    skinnySession.getAttributeOrElseUpdate(csrfKey, GenerateId())
+  override protected def prepareCsrfToken(): String = {
+    Option(skinnySession.getAttributeOrElseUpdate(csrfKey, GenerateId())).map(_.toString).orNull[String]
   }
 
   // --------------------------------------
