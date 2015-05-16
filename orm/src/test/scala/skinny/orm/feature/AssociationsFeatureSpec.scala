@@ -14,9 +14,8 @@ class AssociationsFeatureSpec extends FlatSpec with Matchers {
   NamedDB('AssociationsFeatureSpec).autoCommit { implicit s =>
     sql"create table company(id bigserial, name varchar(100) not null)".execute.apply()
     sql"create table person(id bigserial, name varchar(100) not null, company_id bigint references company(id))".execute.apply()
-    sql"create table department(id bigserial, name varchar(100) not null, company_id bigint references company(id), primary key (id, company_id))".execute.apply()
+    sql"create table department(name varchar(100) not null, company_id bigint references company(id))".execute.apply()
     sql"create table address(id bigserial, address varchar(100) not null, company_id bigint references company(id))".execute.apply()
-    sql"create table company_department(company_id bigint references company(id), department_id bigint references department(id), primary key (company_id, department_id))".execute.apply()
   }
 
   it should "have #defaultIncludesMerge" in {
@@ -28,7 +27,7 @@ class AssociationsFeatureSpec extends FlatSpec with Matchers {
   case class Person(id: Long, name: String, companyId: Option[Long], company: Option[Company] = None)
   case class Company(id: Long, name: String, address: Option[Address] = None, departments: Seq[Department] = Nil)
   case class Address(id: Long, address: String, companyId: Option[Long])
-  case class Department(id: Long, companyId: Option[Long], name: String, company: Option[Company] = None)
+  case class Department(companyId: Option[Long], name: String, company: Option[Company] = None)
   case class CompanyDepartment(companyId: Long, departmentId: Long)
 
   object Person extends SkinnyMapper[Person] {
@@ -36,24 +35,20 @@ class AssociationsFeatureSpec extends FlatSpec with Matchers {
     override def defaultAlias = createAlias("p")
     override def extract(rs: WrappedResultSet, n: ResultName[Person]) = autoConstruct(rs, n, "company")
   }
-  object Company extends SkinnyMapper[Company] {
+  object Company extends SkinnyCRUDMapper[Company] {
     override def connectionPoolName = 'AssociationsFeatureSpec
     override def defaultAlias = createAlias("c")
     override def extract(rs: WrappedResultSet, n: ResultName[Company]) = autoConstruct(rs, n, "address", "departments")
   }
-  object Address extends SkinnyMapper[Address] {
+  object Address extends SkinnyCRUDMapper[Address] {
     override def connectionPoolName = 'AssociationsFeatureSpec
     override def defaultAlias = createAlias("a")
     override def extract(rs: WrappedResultSet, n: ResultName[Address]) = autoConstruct(rs, n)
   }
-  object Department extends SkinnyNoIdMapper[Department] {
+  object Department extends SkinnyNoIdCRUDMapper[Department] {
     override def connectionPoolName = 'AssociationsFeatureSpec
     override def defaultAlias = createAlias("d")
     override def extract(rs: WrappedResultSet, n: ResultName[Department]) = autoConstruct(rs, n, "company")
-  }
-  object CompanyDepartment extends SkinnyJoinTable[CompanyDepartment] {
-    override def connectionPoolName = 'AssociationsFeatureSpec
-    override def defaultAlias = createAlias("cd")
   }
 
   it should "have #joinWithDefaults" in {
@@ -127,16 +122,19 @@ class AssociationsFeatureSpec extends FlatSpec with Matchers {
     Company.hasMany[Department](Department -> Department.defaultAlias, (c, d) => sqls.eq(c.id, d.companyId), (c, d) => c.copy(departments = d))
   }
 
-  it should "have #hasManyThrough" in {
-    Company.hasManyThrough[Department](CompanyDepartment, Department, (c, d) => c.copy(departments = d))
-  }
-
-  it should "have #hasManyThroughWithFk" in {
-    Company.hasManyThroughWithFk[Department](CompanyDepartment, Department, "company_id", "department_id", (c, d) => c.copy(departments = d))
-  }
-
   it should "have #extract" in {
     Person.extract(sql"")
+  }
+
+  it should "work with has-many associations without id" in {
+    val companyId = Company.createWithAttributes('name -> "Typesafe")
+    Department.createWithAttributes('companyId -> companyId, 'name -> "Marketing")
+    Department.createWithAttributes('companyId -> companyId, 'name -> "HR")
+    Department.createWithAttributes('companyId -> companyId, 'name -> "Engineering")
+
+    val deps = Company.hasMany[Department](Department -> Department.defaultAlias, (c, d) => sqls.eq(c.id, d.companyId), (c, d) => c.copy(departments = d))
+    val companies = Company.joins(deps).findAll()
+    println(companies)
   }
 
 }
