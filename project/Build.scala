@@ -6,8 +6,8 @@ import scala.language.postfixOps
 object SkinnyFrameworkBuild extends Build {
 
   lazy val currentVersion = "1.3.19"
-  lazy val scalatraVersion = "2.3.1"
-  lazy val json4SVersion = "3.2.11"
+  lazy val scalatraVersion = "2.4.0-RC2-2"
+  lazy val json4SVersion = "3.3.0.RC2"
   lazy val scalikeJDBCVersion = "2.2.7"
   lazy val h2Version = "1.4.187"
   lazy val kuromojiVersion = "5.2.1"
@@ -20,7 +20,8 @@ object SkinnyFrameworkBuild extends Build {
     organization := "org.skinny-framework",
     version := currentVersion,
     resolvers ++= Seq(
-      "sonatype releases"  at "https://oss.sonatype.org/content/repositories/releases"
+      "sonatype releases"  at "https://oss.sonatype.org/content/repositories/releases",
+      "Scalaz Bintray Repo" at "https://dl.bintray.com/scalaz/releases"
       //,"sonatype snapshots" at "https://oss.sonatype.org/content/repositories/snapshots"
     ),
     publishTo <<= version { (v: String) => _publishTo(v) },
