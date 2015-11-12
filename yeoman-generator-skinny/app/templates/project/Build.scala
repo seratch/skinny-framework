@@ -53,7 +53,7 @@ object SkinnyAppBuild extends Build {
     ).map(applyDefaultExclusions),
     resolvers ++= Seq(
       "sonatype releases"  at "https://oss.sonatype.org/content/repositories/releases"
-      //, "sonatype snapshots" at "https://oss.sonatype.org/content/repositories/snapshots"
+      , "sonatype snapshots" at "https://oss.sonatype.org/content/repositories/snapshots"
     ),
     // Faster "./skinny idea"
     transitiveClassifiers in Global := Seq(Artifact.SourceClassifier),
