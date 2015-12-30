@@ -10,7 +10,7 @@ object SkinnyFrameworkBuild extends Build {
 
   lazy val skinnyMicroVersion = "1.0.0"
   lazy val scalatraTestVersion = "2.4.0"
-  lazy val scalikeJDBCVersion = "2.3.2"
+  lazy val scalikeJDBCVersion = "2.3.3-SNAPSHOT"
   lazy val h2Version = "1.4.190"
   lazy val kuromojiVersion = "5.4.0"
   lazy val mockitoVersion = "1.10.19"
@@ -26,7 +26,7 @@ object SkinnyFrameworkBuild extends Build {
     dependencyOverrides += "org.slf4j" % "slf4j-api" % slf4jApiVersion,
     resolvers ++= Seq(
       "sonatype releases"  at "https://oss.sonatype.org/content/repositories/releases"
-      //, "sonatype snapshots" at "https://oss.sonatype.org/content/repositories/snapshots"
+      , "sonatype snapshots" at "https://oss.sonatype.org/content/repositories/snapshots"
     ),
     publishTo <<= version { (v: String) => _publishTo(v) },
     sbtPlugin := false,
@@ -217,7 +217,7 @@ object SkinnyFrameworkBuild extends Build {
         servletApiDependencies ++ Seq(
           sv match { 
             case v if v.startsWith("2.10.") => "org.scaldi" %% "scaldi" % "0.3.2"
-            case _ =>                          "org.scaldi" %% "scaldi" % "0.5.6"
+            case _ =>                          "org.scaldi" %% "scaldi" % "0.5.7"
           },
           "org.skinny-framework" %% "skinny-micro-test" % skinnyMicroVersion % Test
         ) ++ testDependencies
