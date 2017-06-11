@@ -168,6 +168,9 @@ trait IncludesFeatureWithId[Id, Entity]
     } catch {
       case e: ClassCastException =>
         throw new AssociationSettingsException(s"Failed to execute an includes query because ${e.getMessage}!")
+    } finally {
+      // To release memory immediately after using the cache repository for #includes
+      repository.close()
     }
   }
 

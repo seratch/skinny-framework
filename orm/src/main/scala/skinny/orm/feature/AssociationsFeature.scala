@@ -560,7 +560,7 @@ trait AssociationsFeature[Entity]
       } else if (enabledOneToManyExtractors.size == 6) {
         // one-to-manies 6
         val Seq(ex1: HasManyExtractor[Entity], ex2: HasManyExtractor[Entity], ex3: HasManyExtractor[Entity],
-          ex4: HasManyExtractor[Entity], ex5: HasManyExtractor[Entity], ex6: HasManyExtractor[Entity]) = enabledOneToManyExtractors.toSeq
+        ex4: HasManyExtractor[Entity], ex5: HasManyExtractor[Entity], ex6: HasManyExtractor[Entity]) = enabledOneToManyExtractors.toSeq
         val sql: OneToManies6SQL[Entity, _, _, _, _, _, _, HasExtractor, Entity] = oneExtractedSql
           .toManies(
             to1 = rs => extractHasMany(ex1, rs),
@@ -570,15 +570,15 @@ trait AssociationsFeature[Entity]
             to5 = rs => extractHasMany(ex5, rs),
             to6 = rs => extractHasMany(ex6, rs)
           ).map {
-            case (one, m1, m2, m3, m4, m5, m6) =>
-              ex6.merge(ex5.merge(ex4.merge(ex3.merge(ex2.merge(ex1.merge(one, m1), m2), m3), m4), m5), m6)
-          }
+          case (one, m1, m2, m3, m4, m5, m6) =>
+            ex6.merge(ex5.merge(ex4.merge(ex3.merge(ex2.merge(ex1.merge(one, m1), m2), m3), m4), m5), m6)
+        }
         sql
 
       } else if (enabledOneToManyExtractors.size == 7) {
         // one-to-manies 7
         val Seq(ex1: HasManyExtractor[Entity], ex2: HasManyExtractor[Entity], ex3: HasManyExtractor[Entity],
-          ex4: HasManyExtractor[Entity], ex5: HasManyExtractor[Entity], ex6: HasManyExtractor[Entity], ex7: HasManyExtractor[Entity]) = enabledOneToManyExtractors.toSeq
+        ex4: HasManyExtractor[Entity], ex5: HasManyExtractor[Entity], ex6: HasManyExtractor[Entity], ex7: HasManyExtractor[Entity]) = enabledOneToManyExtractors.toSeq
         val sql: OneToManies7SQL[Entity, _, _, _, _, _, _, _, HasExtractor, Entity] = oneExtractedSql
           .toManies(
             to1 = rs => extractHasMany(ex1, rs),
@@ -589,15 +589,15 @@ trait AssociationsFeature[Entity]
             to6 = rs => extractHasMany(ex6, rs),
             to7 = rs => extractHasMany(ex7, rs)
           ).map {
-            case (one, m1, m2, m3, m4, m5, m6, m7) =>
-              ex7.merge(ex6.merge(ex5.merge(ex4.merge(ex3.merge(ex2.merge(ex1.merge(one, m1), m2), m3), m4), m5), m6), m7)
-          }
+          case (one, m1, m2, m3, m4, m5, m6, m7) =>
+            ex7.merge(ex6.merge(ex5.merge(ex4.merge(ex3.merge(ex2.merge(ex1.merge(one, m1), m2), m3), m4), m5), m6), m7)
+        }
         sql
 
       } else if (enabledOneToManyExtractors.size == 8) {
         // one-to-manies 8
         val Seq(ex1: HasManyExtractor[Entity], ex2: HasManyExtractor[Entity], ex3: HasManyExtractor[Entity], ex4: HasManyExtractor[Entity],
-          ex5: HasManyExtractor[Entity], ex6: HasManyExtractor[Entity], ex7: HasManyExtractor[Entity], ex8: HasManyExtractor[Entity]) = enabledOneToManyExtractors.toSeq
+        ex5: HasManyExtractor[Entity], ex6: HasManyExtractor[Entity], ex7: HasManyExtractor[Entity], ex8: HasManyExtractor[Entity]) = enabledOneToManyExtractors.toSeq
         val sql: OneToManies8SQL[Entity, _, _, _, _, _, _, _, _, HasExtractor, Entity] = oneExtractedSql
           .toManies(
             to1 = rs => extractHasMany(ex1, rs),
@@ -609,15 +609,15 @@ trait AssociationsFeature[Entity]
             to7 = rs => extractHasMany(ex7, rs),
             to8 = rs => extractHasMany(ex8, rs)
           ).map {
-            case (one, m1, m2, m3, m4, m5, m6, m7, m8) =>
-              ex8.merge(ex7.merge(ex6.merge(ex5.merge(ex4.merge(ex3.merge(ex2.merge(ex1.merge(one, m1), m2), m3), m4), m5), m6), m7), m8)
-          }
+          case (one, m1, m2, m3, m4, m5, m6, m7, m8) =>
+            ex8.merge(ex7.merge(ex6.merge(ex5.merge(ex4.merge(ex3.merge(ex2.merge(ex1.merge(one, m1), m2), m3), m4), m5), m6), m7), m8)
+        }
         sql
 
       } else if (enabledOneToManyExtractors.size == 9) {
         // one-to-manies 9
         val Seq(ex1: HasManyExtractor[Entity], ex2: HasManyExtractor[Entity], ex3: HasManyExtractor[Entity], ex4: HasManyExtractor[Entity],
-          ex5: HasManyExtractor[Entity], ex6: HasManyExtractor[Entity], ex7: HasManyExtractor[Entity], ex8: HasManyExtractor[Entity], ex9: HasManyExtractor[Entity]) = enabledOneToManyExtractors.toSeq
+        ex5: HasManyExtractor[Entity], ex6: HasManyExtractor[Entity], ex7: HasManyExtractor[Entity], ex8: HasManyExtractor[Entity], ex9: HasManyExtractor[Entity]) = enabledOneToManyExtractors.toSeq
         val sql: OneToManies9SQL[Entity, _, _, _, _, _, _, _, _, _, HasExtractor, Entity] = oneExtractedSql
           .toManies(
             to1 = rs => extractHasMany(ex1, rs),
@@ -630,9 +630,9 @@ trait AssociationsFeature[Entity]
             to8 = rs => extractHasMany(ex8, rs),
             to9 = rs => extractHasMany(ex9, rs)
           ).map {
-            case (one, m1, m2, m3, m4, m5, m6, m7, m8, m9) =>
-              ex9.merge(ex8.merge(ex7.merge(ex6.merge(ex5.merge(ex4.merge(ex3.merge(ex2.merge(ex1.merge(one, m1), m2), m3), m4), m5), m6), m7), m8), m9)
-          }
+          case (one, m1, m2, m3, m4, m5, m6, m7, m8, m9) =>
+            ex9.merge(ex8.merge(ex7.merge(ex6.merge(ex5.merge(ex4.merge(ex3.merge(ex2.merge(ex1.merge(one, m1), m2), m3), m4), m5), m6), m7), m8), m9)
+        }
         sql
 
       } else {

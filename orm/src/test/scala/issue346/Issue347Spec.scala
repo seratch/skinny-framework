@@ -107,8 +107,8 @@ class Issue347Spec extends fixture.FunSpec with Matchers with Connection with Cr
     it("should return expected results when joins / includes") { implicit session =>
       val users1 = User.joins(User.articlesRef).findAll()
       val users2 = User.includes(User.articlesRef).findAll()
-      println(users1)
-      println(users2)
+      //println(users1)
+      //println(users2)
       users1 should equal(users2)
     }
   }
