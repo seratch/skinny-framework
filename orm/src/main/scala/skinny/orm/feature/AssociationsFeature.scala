@@ -455,9 +455,7 @@ trait AssociationsFeature[Entity]
     if (rs.anyOpt(ex.alias.resultName.field(ex.fk)).isDefined) {
       val mapper = ex.mapper.asInstanceOf[AssociationsFeature[Any]]
       val alias = ex.alias.asInstanceOf[Alias[Any]]
-       try {
-         Some(includesRepository.putAndReturn(ex, mapper.extract(rs, alias.resultName)).asInstanceOf[Entity])
-       } finally { includesRepository.close() }
+      Some(includesRepository.putAndReturn(ex, mapper.extract(rs, alias.resultName)).asInstanceOf[Entity])
     } else None
   }
 
@@ -465,7 +463,9 @@ trait AssociationsFeature[Entity]
     implicit
     includesRepository: IncludesQueryRepository[Entity] = IncludesQueryRepository[Entity]()
   ): SQL[Entity, HasExtractor] = {
-    extractWithAssociations(sql, belongsToAssociations, hasOneAssociations, hasManyAssociations)
+    try {
+      extractWithAssociations(sql, belongsToAssociations, hasOneAssociations, hasManyAssociations)
+    } finally { includesRepository.close() }
   }
 
   /**
@@ -496,7 +496,6 @@ trait AssociationsFeature[Entity]
 
     if (enabledJoinDefinitions.isEmpty) {
       sql.map(rs => extract(rs, defaultAlias.resultName))
-
     } else if (enabledOneToManyExtractors.size > 0) {
       val oneExtractedSql: OneToXSQL[Entity, NoExtractor, Entity] = sql.one(rs =>
         extractWithOneToOneTables(
@@ -680,7 +679,7 @@ trait AssociationsFeature[Entity]
                 // but the right entity is absent when the right one is deleted softly
                 logger.debug(s"The right entity is absent. It may be deleted softly. (fk: ${extractor.fk})")
                 None
-            } finally { includesRepository.close() }
+            }
           }
         extractor.merge(entity, toOne)
     }
@@ -699,7 +698,7 @@ trait AssociationsFeature[Entity]
                 // but the right entity is absent when the right one is deleted softly
                 logger.debug(s"The right entity is absent. It may be deleted softly. (fk: ${extractor.fk})")
                 None
-            } finally { includesRepository.close() }
+            }
           }
         extractor.merge(entity, toOne)
     }
