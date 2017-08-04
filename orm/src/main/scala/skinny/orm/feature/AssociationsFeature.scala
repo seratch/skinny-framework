@@ -455,7 +455,9 @@ trait AssociationsFeature[Entity]
     if (rs.anyOpt(ex.alias.resultName.field(ex.fk)).isDefined) {
       val mapper = ex.mapper.asInstanceOf[AssociationsFeature[Any]]
       val alias = ex.alias.asInstanceOf[Alias[Any]]
-      Some(includesRepository.putAndReturn(ex, mapper.extract(rs, alias.resultName)).asInstanceOf[Entity])
+       try {
+         Some(includesRepository.putAndReturn(ex, mapper.extract(rs, alias.resultName)).asInstanceOf[Entity])
+       } finally { includesRepository.close() }
     } else None
   }
 
@@ -678,7 +680,7 @@ trait AssociationsFeature[Entity]
                 // but the right entity is absent when the right one is deleted softly
                 logger.debug(s"The right entity is absent. It may be deleted softly. (fk: ${extractor.fk})")
                 None
-            }
+            } finally { includesRepository.close() }
           }
         extractor.merge(entity, toOne)
     }
@@ -697,7 +699,7 @@ trait AssociationsFeature[Entity]
                 // but the right entity is absent when the right one is deleted softly
                 logger.debug(s"The right entity is absent. It may be deleted softly. (fk: ${extractor.fk})")
                 None
-            }
+            } finally { includesRepository.close() }
           }
         extractor.merge(entity, toOne)
     }
