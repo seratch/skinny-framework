@@ -463,7 +463,9 @@ trait AssociationsFeature[Entity]
     implicit
     includesRepository: IncludesQueryRepository[Entity] = IncludesQueryRepository[Entity]()
   ): SQL[Entity, HasExtractor] = {
-    extractWithAssociations(sql, belongsToAssociations, hasOneAssociations, hasManyAssociations)
+    try {
+      extractWithAssociations(sql, belongsToAssociations, hasOneAssociations, hasManyAssociations)
+    } finally { includesRepository.close() }
   }
 
   /**
@@ -494,7 +496,6 @@ trait AssociationsFeature[Entity]
 
     if (enabledJoinDefinitions.isEmpty) {
       sql.map(rs => extract(rs, defaultAlias.resultName))
-
     } else if (enabledOneToManyExtractors.size > 0) {
       val oneExtractedSql: OneToXSQL[Entity, NoExtractor, Entity] = sql.one(rs =>
         extractWithOneToOneTables(
